@@ -120,3 +120,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Linode Buckets
+
+BUCKET_NAME = "linode-django-bucket"
+BUCKET_URL = "https://linode-django-bucket.eu-central-1.linodeobjects.com"
+BUCKET_REGION = "eu-central-1"
+
+LINODE_BUCKET_ACCESS_KEY = 'P3REGP34GDKD4WE58KN3'
+LINODE_BUCKET_SECRET_KEY = '1wyOa2zHOhMuAiQfjk2BrAleDEZlTcPcXafi00ed'
+
+AWS_S3_ENDPOINT_URL=f'https://{BUCKET_REGION}.linodeobjects.com'
+AWS_ACCESS_KEY_ID=LINODE_BUCKET_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY=LINODE_BUCKET_SECRET_KEY
+AWS_S3_REGION_NAME=BUCKET_REGION
+AWS_S3_USE_SSL=True
+AWS_STORAGE_BUCKET_NAME=BUCKET_NAME
