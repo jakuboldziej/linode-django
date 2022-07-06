@@ -2,10 +2,20 @@
     margin: 0;
     padding: 0;
 }
+#carouselExampleControls{
+    width: 50vw;
+    height: 50vh;
+}
 .kontener{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2vh;
     margin-top: 5vh;
+}
+.carousel-control-prev,
+.carousel-control-next
+{
+    margin-top: 11vh;
 }
