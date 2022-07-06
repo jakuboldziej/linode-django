@@ -6,4 +6,4 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('slider/', views.slider, name="slider"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATICFILES_STORAGE, document_root=settings.STATICFILES_STORAGE)

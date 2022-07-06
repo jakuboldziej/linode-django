@@ -10,6 +10,7 @@ def slider(request):
     context = {
         'images': image_object, 
     }
+    print(image_object)
     return render(request, 'slider.html', context)
 
 # Events

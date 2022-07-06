@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-01^000f%z)3yw_@a86)x02if)8tro)u*n%%(5gej)_r-eee8_o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['172.104.148.177', '127.0.0.1']
 
@@ -20,7 +20,6 @@ ALLOWED_HOSTS = ['172.104.148.177', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -105,34 +104,27 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # Linode Buckets
 
 BUCKET_NAME = "linode-django-bucket"
 BUCKET_URL = "https://linode-django-bucket.eu-central-1.linodeobjects.com"
-BUCKET_REGION = "eu-central-1"
 
-LINODE_BUCKET_ACCESS_KEY = 'P3REGP34GDKD4WE58KN3'
-LINODE_BUCKET_SECRET_KEY = '1wyOa2zHOhMuAiQfjk2BrAleDEZlTcPcXafi00ed'
+LINODE_BUCKET_REGION = "eu-central-1"
+LINODE_BUCKET_ACCESS_KEY = '754L9QI16M1JFL1RP0CR'
+LINODE_BUCKET_SECRET_KEY = 'rpkQZd5oIwOOV2g0HrShsVZvNtoQEgoGM15xDeL5'
 
-AWS_S3_ENDPOINT_URL=f'https://{BUCKET_REGION}.linodeobjects.com'
+AWS_S3_ENDPOINT_URL=f'https://{LINODE_BUCKET_REGION}.linodeobjects.com'
 AWS_ACCESS_KEY_ID=LINODE_BUCKET_ACCESS_KEY
 AWS_SECRET_ACCESS_KEY=LINODE_BUCKET_SECRET_KEY
-AWS_S3_REGION_NAME=BUCKET_REGION
+AWS_S3_REGION_NAME=LINODE_BUCKET_REGION
 AWS_S3_USE_SSL=True
 AWS_STORAGE_BUCKET_NAME=BUCKET_NAME
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIAFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
