@@ -16,10 +16,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['172.104.148.177', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,6 +125,15 @@ AWS_S3_REGION_NAME=LINODE_BUCKET_REGION
 AWS_S3_USE_SSL=True
 AWS_STORAGE_BUCKET_NAME=BUCKET_NAME
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIAFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+if DEBUG:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    
+else:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIAFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+        
