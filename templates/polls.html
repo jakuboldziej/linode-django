@@ -1,34 +1,27 @@
 {% extends 'base.html' %}
 
-{% block title %}Main Page{% endblock %}
+{% block title %}Website | Polls{% endblock %}
 
 {% block main %}
-<div class="position-absolute top-50 start-50 translate-middle">
-<div id="polls-container" class="row">
-    <div class="col-lg-8 col-lg-offset-2">
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
+    <a type="button" class="btn btn-success" href="/createpoll">Create New Poll</a>
+    <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
                 <h3 class="panel-title">Polls</h3>
             </div>
-                
             <ul class="list-group rounded-0 border border-2 border-secondary">
+                {% for poll in polls %}
                 <li class="list-group-item px-4 ">
-                    <strong>Which language is easier to learn?</strong>
+                    <strong>{{poll.question}}</strong>&nbsp;&nbsp;
                     <span class="pull-right ">
-                        <a href="#" class="btn btn-success btn-xs">Vote</a>
-                        <a href="#" class="btn btn-default btn-xs">View Results</a>
+                        <a href="/poll/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
+                        <a href="/results/{{poll.id}}" class="btn btn-default btn-xs">View Results</a>
                     </span>
                 </li>
-                <li class="list-group-item px-4 ">
-                    <strong>Which operating system do you use?</strong>
-                    <span class="pull-right">
-                        <a href="#" class="btn btn-info btn-xs">Vote</a>
-                        <a href="#" class="btn btn-default btn-xs">View Results</a> 
-                    </span>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

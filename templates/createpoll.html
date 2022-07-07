@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Website | Create Poll{% endblock %}
+
+{% block main %}
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-3">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Question</label>
+            <textarea class="form-control" name="question" id="exampleFormControlTextarea1" rows="3" placeholder="Some question?"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Option one</label>
+            <input type="text" name="optionone" class="form-control" id="exampleFormControlInput1" placeholder="Option one...">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Option two</label>
+            <input type="text" name="optiontwo" class="form-control" id="exampleFormControlInput1" placeholder="Option two...">
+        </div>
+        <button type="submit" class="btn btn-success">Create Poll</button>
+        <a type="button" class="btn btn-success" href="/polls">Back</a>
+    </form>
+</div>
+{% endblock %}

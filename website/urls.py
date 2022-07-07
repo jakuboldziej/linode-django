@@ -9,6 +9,9 @@ urlpatterns = [
     path('slider/', views.slider, name="slider"),
     path('smsapi/', views.smsapi, name="smsapi"),
     path('polls/', views.polls, name="polls"),
+    path('createpoll/', views.createpoll, name="createpoll"),
+    path('results/<int:poll_id>', views.results, name="results"),
+    path('poll/<int:poll_id>', views.poll, name="poll"),
     # Events
     path('sendsms/', views.sendsms, name="sendsms"),
 ] 
