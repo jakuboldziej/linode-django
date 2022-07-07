@@ -25,11 +25,15 @@ def smsapi(request):
     return render(request, 'smsapi.html')
 
 def polls(request):
-    poll_object = TwoOptionPoll.objects.all()
-    context ={
-        'polls': poll_object,
-    }
-    return render(request, 'polls.html', context)
+    try:
+        poll_object = TwoOptionPoll.objects.all()
+        context ={
+            'polls': poll_object,
+        }
+        return render(request, 'polls.html', context)
+    except:
+        return render(request, 'polls.html')
+        
 
 def createpoll(request):
     if request.method == 'POST':
