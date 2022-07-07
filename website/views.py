@@ -24,6 +24,9 @@ def slider(request):
 def smsapi(request):
     return render(request, 'smsapi.html')
 
+def polls(request):
+    return render(request, 'polls.html')
+
 # Events
 
 def sendsms(request):

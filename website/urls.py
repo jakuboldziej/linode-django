@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('slider/', views.slider, name="slider"),
     path('smsapi/', views.smsapi, name="smsapi"),
+    path('polls/', views.polls, name="polls"),
     # Events
     path('sendsms/', views.sendsms, name="sendsms"),
 ] 

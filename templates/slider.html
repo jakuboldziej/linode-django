@@ -1,36 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website | Slider</title>
-    <link href="{% static '/css/slider.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-    <div class="kontener">
-      <a href="/" title="Main Page"><button class="btn btn-success m-2" type="button">Main Page</button></a>
-      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-pause="false">
+{% extends 'base.html' %}
+
+{% block title %}Website | Slider{% endblock %}
+
+{% block main %}
+      <div id="carouselExampleControls" class="carousel slide position-absolute top-50 start-50 translate-middle" data-bs-ride="carousel" data-pause="false">
           <div class="carousel-inner">
             {% for image in images %}
-              <div class="carousel-item {% if forloop.counter0 == 0%} active {% endif %} ">
+              <div class="carousel-item {% if forloop.counter0 == 0%} active {% endif %}">
                 <img class="d-block w-100" src="{{image.img_src.url}}" alt="{{image.title}}" title="{{image.title}}">
               </div>
               {% endfor %} 
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-    </div>
-    
-    </body>
-</html>
+{% endblock %}
+
