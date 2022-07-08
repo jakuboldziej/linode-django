@@ -7,7 +7,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
-                <h3 class="panel-title">Vote</h3>
+                <h3 class="panel-title">Vote | Change vote</h3>
                 <h3 class="panel-title"><b>{{poll.question}}</b></h3>
             </div>
             <ul class="list-group rounded-0 border border-2 border-secondary d-flex flex-column">
@@ -17,11 +17,11 @@
                         <div class="form-group">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="poll" value="option1" required>
+                                    <input type="radio" name="option" value="option1" {% if user_voted_on == 1 %} checked {% endif %}>
                                     {{poll.option_one}}
                                 </label><br><br>
                                 <label>
-                                    <input type="radio" name="poll" value="option2">
+                                    <input type="radio" name="option" value="option2" {% if user_voted_on == 2 %} checked {% endif %}>
                                     {{poll.option_two}}
                                 </label> &nbsp;
                             </div>
@@ -29,11 +29,21 @@
                         <input type="hidden" name="id" value="1">
                         <hr />
                         <button type="submit" class="btn btn-info">Submit</button>
+                        {% for user in user_votes %}
+                        <p>{{user}}</p>
+                        {% endfor %}
                     </form>
                 </li>
             </ul>
         </div>
     </div>
     <a type="button" class="btn btn-success" href="/polls">Back</a>
+    {% if messages.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 </div>
 {% endblock %}

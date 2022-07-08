@@ -4,18 +4,20 @@
 
 {% block main %}
 <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
+    {% if user.is_authenticated %}
     <a type="button" class="btn btn-success" href="/createpoll">Create New Poll</a>
+    {% endif %}
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
                 <h3 class="panel-title">Polls</h3>
             </div>
             <ul class="list-group rounded-0 border border-2 border-secondary">
-                {% for poll in polls %}
+                {% for poll in polls reversed%}
                 <li class="list-group-item px-4 ">
                     <strong>{{poll.question}}</strong>&nbsp;&nbsp;
                     <span class="pull-right ">
-                        <a href="/poll/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
+                        <a href="/vote/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
                         <a href="/results/{{poll.id}}" class="btn btn-default btn-xs">View Results</a>
                     </span>
                 </li>
@@ -23,5 +25,13 @@
             </ul>
         </div>
     </div>
+    {% if messages.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
 </div>
 {% endblock %}

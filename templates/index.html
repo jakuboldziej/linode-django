@@ -3,7 +3,13 @@
 {% block title %}Website | Main Page{% endblock %}
 
 {% block main %}
-<div class="position-absolute top-50 start-50 translate-middle"><h1>Main Page</h1></div>
+
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column">
+  <h1>Main Page</h1>
+  {% if user.is_authenticated %}
+  <h2>Logged in as: {{user.username}}</h2>
+  {% endif %}
+</div>
 <blockquote class="blockquote mb-0 position-absolute bottom-0 p-2 opacity-50">
   <footer class="blockquote-footer"><cite title="Source Title">Created by </cite>Jakub Ołdziejewski</footer>
 </blockquote>

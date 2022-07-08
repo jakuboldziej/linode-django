@@ -3,11 +3,11 @@
 {% block title %}Website | Slider{% endblock %}
 
 {% block main %}
-      <div id="carouselExampleControls" class="carousel slide position-absolute top-50 start-50 translate-middle" data-bs-ride="carousel" data-pause="false">
-          <div class="carousel-inner">
+      <div id="carouselExampleControls" class="carousel slide position-absolute top-50 start-50 translate-middle my-4" data-bs-ride="carousel" data-pause="false">
+          <div class="carousel-inner" data-pause="false">
             {% for image in images %}
               <div class="carousel-item {% if forloop.counter0 == 0%} active {% endif %}">
-                <img class="d-block w-100" src="{{image.img_src.url}}" alt="{{image.title}}" title="{{image.title}}">
+                <img class="d-block w-100" src="{{image.img_src.url}}" alt="{{image.img_src.url}}">
               </div>
               {% endfor %} 
           </div>
@@ -18,7 +18,30 @@
           <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-          </button>
+          </button><br>
+          {% if user.username == "mmagusiak" or user.username == "bbkubek" %}
+          {% comment %} enctype="multipart/form-data" for file upload {% endcomment %}
+          <form action="/addimage/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group">
+              <input type="file" multiple name="image" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+              <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Dodaj</button>
+            </div>
+          </form><br>
+          <form action="/deleteimage/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Usuń zdjęcie</label>
+            <select class="form-select" name="img_src" id="inputGroupSelect01">
+              <option disabled selected>Choose...</option>
+              {% for image in images %}
+            <option>{{image.img_src}}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Usuń</button>
+            <form>
+              {% endif %}
+          </div>
         </div>
 {% endblock %}
 

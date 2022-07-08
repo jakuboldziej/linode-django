@@ -1,6 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+
 from . import views
 
 urlpatterns = [
@@ -11,9 +12,14 @@ urlpatterns = [
     path('polls/', views.polls, name="polls"),
     path('createpoll/', views.createpoll, name="createpoll"),
     path('results/<int:poll_id>', views.results, name="results"),
-    path('poll/<int:poll_id>', views.poll, name="poll"),
+    path('vote/<int:poll_id>', views.vote, name="vote"),
     # Events
     path('sendsms/', views.sendsms, name="sendsms"),
+    path("logout/", views.logout, name="logout"),
+    path("addimage/", views.addimage, name="addimage"),
+    path("deleteimage/", views.deleteimage, name="deleteimage"),
+    path("deletepoll/<int:poll_id>", views.deletepoll, name="deletepoll"),
+
 ] 
 
 if settings.DEBUG:

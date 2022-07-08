@@ -9,15 +9,42 @@
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
                 <h3 class="panel-title">Poll Results</h3>
-                <h3 class="panel-title"><b>{{poll.question}}</b></h3>
+                <h3 class="panel-title"><b>Question: {{poll.question}}</b></h3>
+                <span class="panel-title">Poll created by: {{poll.user.username}}</span>
             </div>
             <ul class="list-group">
                 <li class="list-group-item">{{poll.option_one}} &mdash; <strong>{{poll.option_one_count}}</strong></li>
                 <li class="list-group-item">{{poll.option_two}} &mdash; <strong>{{poll.option_two_count}}</strong></li>
-                <li class="list-group-item"><b>Total</b> &mdash; <strong>{{poll.total}}</strong></li>
+                <li class="list-group-item"><b>Total</b> &mdash; <strong>{{poll.total}}</strong> &nbsp; &nbsp;
+                    {% if user.username == poll.user.username %}
+                    <button class="dropdown btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" >
+                        Detailed votes
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                        <li class="dropdown-item"><b>Users voted on: {{poll.option_one}}</b></li>
+                        {% if user_votes_list == None %}
+                        <li class="dropdown-item">No Users Voted</li>
+                        {% endif %}
+                        {% for user in option1_list %}
+                        <li class="dropdown-item">{{user}}</li>
+                        {% endfor %}
+                        <li class="dropdown-item"><b>Users voted on: {{poll.option_two}}</b></li>
+                        {% for user in option2_list%}
+                        <li class="dropdown-item">{{user}}</li>
+                        {% endfor %}
+                        {% if user_votes_list == None %}
+                        <li class="dropdown-item">No Users Voted</li>
+                        {% endif %}
+                      </ul>
+                      {% endif %}
+                </li>
             </ul>
         </div>
     </div>
+    
     <a type="button" class="btn btn-success" href="/polls">Back</a>
+    {% if user.username == poll.user.username %}
+    <a type="button" class="btn btn-danger" href="/deletepoll/{{poll.id}}">Delete Poll</a>
+    {% endif %}
 </div>
 {% endblock %}
