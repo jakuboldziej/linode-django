@@ -13,7 +13,16 @@ smsapi_access_token = 'L3LlVvkfevSgw0wqeADhLEYLkc6Z27FCzrGm9aeH'
 
 # Pages
 def index(request):
-    return render(request, 'index.html')
+    users = User.objects.all()
+    images = Image.objects.all()
+    polls = TwoOptionPoll.objects.all()
+
+    context = {
+        'users': users,
+        'images': images,
+        'polls': polls,
+    }
+    return render(request, 'index.html', context)
 
 def slider(request):
     image_object = Image.objects.all()

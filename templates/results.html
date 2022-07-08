@@ -16,7 +16,7 @@
                 <li class="list-group-item">{{poll.option_one}} &mdash; <strong>{{poll.option_one_count}}</strong></li>
                 <li class="list-group-item">{{poll.option_two}} &mdash; <strong>{{poll.option_two_count}}</strong></li>
                 <li class="list-group-item"><b>Total</b> &mdash; <strong>{{poll.total}}</strong> &nbsp; &nbsp;
-                    {% if user.username == poll.user.username %}
+                    {% if user.username == poll.user.username or user.is_superuser %}
                     <button class="dropdown btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" >
                         Detailed votes
                       </button>
@@ -43,7 +43,7 @@
     </div>
     
     <a type="button" class="btn btn-success" href="/polls">Back</a>
-    {% if user.username == poll.user.username %}
+    {% if user.username == poll.user.username or user.is_superuser %}
     <a type="button" class="btn btn-danger" href="/deletepoll/{{poll.id}}">Delete Poll</a>
     {% endif %}
 </div>
