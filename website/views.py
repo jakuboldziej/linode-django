@@ -25,20 +25,17 @@ def slider(request):
 def smsapi(request):
     return render(request, 'smsapi.html')
         
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password1']
-        password2 = request.POST['password2']
-            
+def register(response):
+    if response.method == 'POST':
+        form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-            return redirect('/login')
+
+            return redirect("/login")
     else:
         form = RegisterForm()
-        return render(request, "registration/register.html", {"form": form})
+
+    return render(response, "registration/register.html", {"form": form})
 
 # 404 Handling
 def view_page_not_found(request, exception):
