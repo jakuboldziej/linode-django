@@ -13,6 +13,11 @@
     <style type="text/css" rel="stylesheet">
     {% block style %}{% endblock %}
     </style>
+    <script>
+      $("#exampleModal").on('shown.bs.modal', function () {
+        $(this).find("input:visible:first").focus();
+    });
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark" style="z-index: 99;">

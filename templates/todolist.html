@@ -67,7 +67,7 @@
     {% endif %}
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -76,7 +76,7 @@
         <form action="" method="POST" id="formOne">
             {% csrf_token %}
             <div class="modal-body">
-                <input type="text" name="todoTitle" class="form-control" id="exampleFormControlInput1" placeholder="Name..." required>
+                <input type="text" name="todoTitle" class="form-control" id="exampleFormControlInput1" placeholder="Name..." required autofocus/>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -2,6 +2,15 @@
 
 {% block title %}Website | Slider{% endblock %}
 
+{% block style %}
+@media only screen and (max-width: 700px) {
+  .carousel-control-prev,
+  .carousel-control-next{
+      display: none;
+  }
+}
+{% endblock %}
+
 {% block main %}
       <div id="carouselExampleControls" class="carousel slide position-absolute top-50 start-50 translate-middle my-4" data-bs-ride="carousel" data-pause="false">
           <div class="carousel-inner" data-pause="false">
