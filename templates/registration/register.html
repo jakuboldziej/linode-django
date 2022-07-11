@@ -4,9 +4,23 @@
 
 {% load crispy_forms_tags %}
 
+{% block style %}
+
+@media only screen and (max-width: 700px) {
+  #kontener {
+    margin-top: 15vh;
+  }
+}
+@media only screen and (max-width: 350px) {
+  #kontener {
+    margin-top: 20vh;
+  }
+}
+
+{% endblock %}
 
 {% block main %}
-<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column">
+<div id="kontener" class="position-absolute top-50 start-50 translate-middle">
 <form method="post" class="form-group">
   {% csrf_token %}
   {{form|crispy}}

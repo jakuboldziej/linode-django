@@ -3,11 +3,11 @@
 {% block title %}Website | Polls{% endblock %}
 
 {% block main %}
-<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
+<div id="kontener" class="position-absolute start-50 translate-middle d-flex align-items-center flex-column gap-4 polls">
     {% if user.is_authenticated %}
     <a type="button" class="btn btn-primary" href="/polls/createpoll">Create New Poll</a>
     {% endif %}
-    <div class="row">
+    <div class="row" style="width: 180%;">
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
                 <h3 class="panel-title">Polls</h3>
@@ -15,11 +15,13 @@
             <ul class="list-group rounded-0 border border-2 border-secondary">
                 {% for poll in polls reversed%}
                 <li class="list-group-item px-4 ">
-                    <strong>{{poll.question}}</strong>&nbsp;&nbsp;
-                    <span class="pull-right ">
-                        <a href="/polls/vote/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
+                    <div class="float-start d-flex py-1">
+                    <strong>{{poll.question}}</strong>
+                    </div>
+                    <div class="tasks-items-wrapper d-flex justify-content-end">
+                        <a href="/polls/vote/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;
                         <a href="/polls/results/{{poll.id}}" class="btn btn-default btn-xs">View Results</a>
-                    </span>
+                    </div>
                 </li>
                 {% endfor %}
             </ul>
@@ -32,6 +34,5 @@
         {% endfor %}
     </ul>
     {% endif %}
-
 </div>
 {% endblock %}

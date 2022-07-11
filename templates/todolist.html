@@ -3,11 +3,9 @@
 {% block title %}Website | {{todoList.title}}{% endblock %}
 
 {% block main %}
-<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Create new ToDoList Item
-    </button>
-    <div class="row">
+<div id="kontener" class="position-relative start-50 translate-middle d-flex align-items-center flex-column gap-4">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create new Item</button>
+    <div class="row" style="width: 180%;">
         <div class="panel panel-default">
             <div class="panel-heading  bg-secondary p-2 px-4">
                 <h3 class="panel-title" style="text-transform: capitalize;">{{todoList.title}} Items <h3>
@@ -21,7 +19,7 @@
                         <a href="/itemcheck/{{todoListItem.id}}"><img src="https://linode-django-bucket.eu-central-1.linodeobjects.com/icons/checkmark.png"></a>&nbsp;
                         <h4>{{todoListItem.title}}</h4>
                     </div>
-                    <div class="tasks-items-wrapper d-flex justify-content-end">&nbsp;&nbsp;&nbsp;
+                    <div class="tasks-items-wrapper d-flex justify-content-end">
                         <a type="button" class="btn btn-warning" href="/todo/todoedit/{{todoListItem.id}}">Edit</a>&nbsp;
                         <a type="button" class="btn btn-danger" href="/deletetodoitem/{{todoListItem.id}}">Delete</a>
                     </div>
@@ -31,7 +29,6 @@
                 {% if todoListItem_checked != 0 %}
                 <li class="list-group-item px-4 ">
                     {% endif %}
-
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">

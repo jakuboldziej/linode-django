@@ -7,3 +7,34 @@
 .carousel-control-next{
     height: 65vh;
 }
+#kontener{
+    margin-top: 30vh;
+    width: 50%;
+    max-height: 550px;
+}
+
+@media only screen and (max-width: 1500px) {
+    #kontener {
+      margin-top: 40vh;
+    }
+    .kontener-polls{
+        margin-top: 50vh;
+    }
+}
+@media only screen and (max-width: 700px) {
+    #kontener {
+      margin-top: 20vh;
+    }
+    #carouselExampleControls{
+        width: 95%;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #kontener {
+      margin-top: 45vh;
+    }
+    .polls{
+        margin-top: 50vh;
+      }
+    
+}
