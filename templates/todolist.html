@@ -28,7 +28,6 @@
                 {% endfor %}
                 {% if todoListItem_checked != 0 %}
                 <li class="list-group-item px-4 ">
-                    {% endif %}
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">
@@ -47,17 +46,15 @@
                                 {% endif %}
                                 {% endfor %}
                             </div>
-                            </div>
                         </div>
                     </div>
                 </li>
-                
+                {% endif %}
             </ul>
         </div>
-        <a type="button" class="btn btn-success" href="/todo">Back</a>
-        <a type="button" class="btn btn-danger" href="/deletetodo/{{todoList.id}}">Delete ToDo</a>
     </div>
-        
+    <a type="button" class="btn btn-success" href="/todo">Back</a>
+    <a type="button" class="btn btn-danger" href="/deletetodo/{{todoList.id}}">Delete ToDo</a>
     {% if messages.level == DEFAULT_MESSAGE_LEVELS.INFO %}
     <ul class="messages">
         {% for message in messages %}
@@ -66,24 +63,24 @@
     </ul>
     {% endif %}
 </div>
-<!-- Modal -->
+    <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New ToDoList Item</h5>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create New ToDoList Item</h5>
+            </div>
+            <form action="" method="POST" id="formOne">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="text" name="todoTitle" class="form-control" id="exampleFormControlInput1" placeholder="Name..." required autofocus/>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
-        <form action="" method="POST" id="formOne">
-            {% csrf_token %}
-            <div class="modal-body">
-                <input type="text" name="todoTitle" class="form-control" id="exampleFormControlInput1" placeholder="Name..." required autofocus/>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-        </form>
-    </div>
     </div>
 </div>
 {% endblock %}
