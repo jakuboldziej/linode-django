@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Website | Edit: {{todoListItem.title}}{% endblock %}
+
+{% block main %}
+
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column">
+  <h3>Editing: {{todoListItem.title}}</h3>
+  <h3>In ToDoList: {{todoList.title}}</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Edit name</label>
+      <input type="text" name="todoItemTitle" class="form-control" id="exampleInputEmail1" required>
+    </div>
+    <a href="/todo/todolist/{{todolist_id}}"><button type="submit" class="btn btn-primary">Edit</button></a>
+    <a type="button" href="/todo/todolist/{{todolist_id}}" class="btn btn-success">Back</a>
+  </form><br>
+</div>
+{% endblock %}

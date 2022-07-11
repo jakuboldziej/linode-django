@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Website | Create ToDoList{% endblock %}
+
+{% block main %}
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-3">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">ToDo Title</label>
+            <input type="text" name="todotitle" class="form-control" id="exampleFormControlInput1" placeholder="Title...">
+        </div>
+        <button type="submit" class="btn btn-primary">Create ToDoList</button>
+        <a type="button" class="btn btn-success" href="/todo">Back</a>
+    </form>
+</div>
+{% endblock %}

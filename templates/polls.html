@@ -5,7 +5,7 @@
 {% block main %}
 <div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
     {% if user.is_authenticated %}
-    <a type="button" class="btn btn-success" href="/createpoll">Create New Poll</a>
+    <a type="button" class="btn btn-primary" href="/polls/createpoll">Create New Poll</a>
     {% endif %}
     <div class="row">
         <div class="panel panel-default">
@@ -17,8 +17,8 @@
                 <li class="list-group-item px-4 ">
                     <strong>{{poll.question}}</strong>&nbsp;&nbsp;
                     <span class="pull-right ">
-                        <a href="/vote/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
-                        <a href="/results/{{poll.id}}" class="btn btn-default btn-xs">View Results</a>
+                        <a href="/polls/vote/{{poll.id}}" class="btn btn-success btn-xs">Vote</a>&nbsp;&nbsp;
+                        <a href="/polls/results/{{poll.id}}" class="btn btn-default btn-xs">View Results</a>
                     </span>
                 </li>
                 {% endfor %}

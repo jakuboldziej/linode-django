@@ -10,20 +10,25 @@
     {% csrf_token %}
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Enter receiver phone number</label>
-      <input type="text" type="text" name="smsreceiver" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+      <input type="text" name="smsreceiver" class="form-control" id="exampleInputEmail1" required>
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Message</label>
       <input type="text" name="smsmessage" class="form-control" id="exampleInputPassword1" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Send</button>
   </form><br>
   {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </div>
+{% if request.user.username == 'bbkubek' %}
+<div class="position-absolute end-0 translate-middle my-5">
+messages
+</div>
+{% endif %}
 {% endblock %}

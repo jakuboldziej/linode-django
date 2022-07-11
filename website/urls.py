@@ -9,17 +9,30 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('slider/', views.slider, name="slider"),
     path('smsapi/', views.smsapi, name="smsapi"),
+    # polls
     path('polls/', views.polls, name="polls"),
-    path('createpoll/', views.createpoll, name="createpoll"),
-    path('results/<int:poll_id>', views.results, name="results"),
-    path('vote/<int:poll_id>', views.vote, name="vote"),
+    path('polls/createpoll/', views.createpoll, name="createpoll"),
+    path('polls/results/<int:poll_id>', views.results, name="results"),
+    path('polls/vote/<int:poll_id>', views.vote, name="vote"),
+    # toDoLists
+    path('todo', views.todo, name="todo"),
+    path('todo/todolist/<int:todo_id>', views.todolist, name="todolist"),
+    path('todo/createtodo/', views.createtodo, name="createtodo"),
+    path("todo/todoedit/<int:todoitem_id>", views.todoedit, name="todoedit"),
     # Events
     path('sendsms/', views.sendsms, name="sendsms"),
     path("logout/", views.logout, name="logout"),
     path("addimage/", views.addimage, name="addimage"),
     path("deleteimage/", views.deleteimage, name="deleteimage"),
-    path("deletepoll/<int:poll_id>", views.deletepoll, name="deletepoll"),
+    path("deletetodo/<int:todo_id>", views.deletetodo, name="deletetodo"),
+    path("deletetodoitem/<int:todoitem_id>", views.deletetodoitem, name="deletetodoitem"),
+    path("itemcheck/<int:todoitem_id>", views.itemcheck, name="itemcheck"),
+    path("itemuncheck/<int:todoitem_id>", views.itemuncheck, name="itemuncheck"),
 
+    
+    path("deletepoll/<int:poll_id>", views.deletepoll, name="deletepoll"),
+    
+    
 ] 
 
 if settings.DEBUG:

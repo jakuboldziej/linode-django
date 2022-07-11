@@ -4,8 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 
 from .forms import RegisterForm
-from .models import Image, TwoOptionPoll
-from datetime import date
+from .models import Image, TwoOptionPoll, Message, ToDoList, ToDoListItem
 
 from smsapi.client import SmsApiPlClient
 
@@ -16,11 +15,13 @@ def index(request):
     users = User.objects.all()
     images = Image.objects.all()
     polls = TwoOptionPoll.objects.all()
+    todoLists = ToDoList.objects.all()
 
     context = {
         'users': users,
         'images': images,
         'polls': polls,
+        'todoLists': todoLists,
     }
     return render(request, 'index.html', context)
 
@@ -32,7 +33,12 @@ def slider(request):
     return render(request, 'slider.html', context)
 
 def smsapi(request):
-    return render(request, 'smsapi.html')
+    SMS = Message.objects.all()
+    context = {
+        'SMS': SMS,
+    }
+
+    return render(request, 'smsapi.html', context)
         
 def register(response):
     if response.method == 'POST':
@@ -46,18 +52,83 @@ def register(response):
 
     return render(response, "registration/register.html", {"form": form})
 
-# 404 Handling
-def view_page_not_found(request, exception):
-    return render(request, '404.html')
+# ToDoLists
+def todo(request):
+    if request.user.is_authenticated:
+        todoList = ToDoList.objects.filter(user=request.user)
+
+        context = {
+            "todoLists": todoList,
+        }
+        return render(request, 'todo.html', context)
+    else:
+        return render(request, 'todo.html')
+
+def todolist(request, todo_id):
+    todoList = ToDoList.objects.get(id=todo_id)
+    todoListItem = ToDoListItem.objects.filter(todolist=todoList)
+    if request.method == 'POST':
+        if 'todoTitle' in request.POST:
+            todoTitle = request.POST['todoTitle']
+            todoListItemSave = ToDoListItem.objects.create(todolist=todoList, title=todoTitle)
+            todoListItemSave.save()
+
+            print("Created todo item " + todoTitle)
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        request.session['current_todolist'] = todo_id
+        request.session.modified = True
+
+        todoListItem_checked = ToDoListItem.objects.filter(todolist=todoList, checked=True).count()
+
+        context = {
+            'todoList': todoList,
+            'todoListItems': todoListItem,
+            'todoListItem_checked': todoListItem_checked,
+        }
+        return render(request, 'todolist.html', context)
+
+def createtodo(request):
+    if request.method == 'POST':
+        user = User.objects.get(username=request.user.username)
+        todotitle = request.POST['todotitle']
+
+        new_todoList = ToDoList.objects.create(user=user, title=todotitle)
+        new_todoList.save()
+
+        return redirect('todo')
+    else:
+        return render(request, 'createtodo.html')
+
+def todoedit(request, todoitem_id):
+    current_todolist = request.session['current_todolist']
+    todoListItem = ToDoListItem.objects.get(id=todoitem_id)
+    todoList = ToDoList.objects.get(id=current_todolist)
+    
+    if request.method == 'POST':
+        print("POST")
+        todoListItem.title = request.POST['todoItemTitle']
+        todoListItem.save()
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        context = {
+            'todoListItem': todoListItem,
+            'todolist_id': current_todolist,
+            'todoList': todoList,
+        }
+        print("openeded without post")
+        return render(request, 'todoedit.html', context) 
+
+# Polls
 
 def createpoll(request):
     if request.method == 'POST':
-        user_object = User.objects.get(username=request.user.username)
+        user = User.objects.get(username=request.user.username)
         question = request.POST['question']
         option_one = request.POST['optionone']
         option_two = request.POST['optiontwo']
 
-        new_poll = TwoOptionPoll.objects.create(user=user_object, question=question, option_one=option_one, option_two=option_two)
+        new_poll = TwoOptionPoll.objects.create(user=user, question=question, option_one=option_one, option_two=option_two)
         new_poll.save()
         return redirect('polls')
     else:
@@ -81,7 +152,6 @@ def vote(request, poll_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user_list_split = poll.user_votes.split(", ")[:-1]
-
             user_list = [user[:-1] for user in user_list_split]
         
             try:
@@ -149,16 +219,48 @@ def results(request, poll_id):
     }
     return render(request, 'results.html', context)
 
+# 404 Handling
+def view_page_not_found(request, exception):
+    return render(request, '404.html')
+
 # Events
 
 def addimage(request):
     if request.method == 'POST':
         img_src = request.FILES.getlist('image')
         for img in img_src:
-            img = Image.objects.create(img_src=img, title="asdf")
+            print(img)
+            img = Image.objects.create(img_src=img, title=img)
             img.save()
     
     return redirect('slider')
+
+def deletetodo(request, todo_id):
+    todoList = ToDoList.objects.get(id=todo_id)
+    todoList.delete()
+
+    return redirect('todo')
+
+def deletetodoitem(request, todoitem_id):
+    todoListItem = ToDoListItem.objects.get(id=todoitem_id)
+
+    todoListItem.delete()
+
+    return redirect(request.META.get('HTTP_REFERER'))   
+
+def itemcheck(request, todoitem_id):
+    todoListItem = ToDoListItem.objects.get(id=todoitem_id)
+    todoListItem.checked = True
+    todoListItem.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def itemuncheck(request, todoitem_id):
+    todoListItem = ToDoListItem.objects.get(id=todoitem_id)
+    todoListItem.checked = False
+    todoListItem.save()
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def deleteimage(request):
     if request.method == 'POST':
@@ -174,7 +276,7 @@ def deleteimage(request):
 def deletepoll(request, poll_id):
     poll = TwoOptionPoll.objects.get(id=poll_id)
     poll.delete()
-    return redirect('polls')
+    return redirect('todo')
 
 def logout(request):
     auth.logout(request)
@@ -183,11 +285,14 @@ def logout(request):
 def sendsms(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
+            user = request.user.username
             client = SmsApiPlClient(access_token=smsapi_access_token)
             smsreceiver = "+48" + request.POST['smsreceiver']
             smsmessage = request.POST['smsmessage']
             print(smsreceiver, smsmessage)
             client.sms.send(to=smsreceiver, message=smsmessage)
+            SMS = Message.objects.create(user=user, phoneNumber=smsreceiver, message=smsmessage, date=date.now())
+            SMS.save()
 
             return redirect('/smsapi/')
     else:

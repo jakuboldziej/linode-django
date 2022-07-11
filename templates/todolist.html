@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Website | {{todoList.title}}{% endblock %}
+
+{% block main %}
+<div class="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center flex-column gap-4">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create new ToDoList Item
+    </button>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading  bg-secondary p-2 px-4">
+                <h3 class="panel-title" style="text-transform: capitalize;">{{todoList.title}} Items <h3>
+                <h3 class="panel-title"><b>{{poll.question}}</b></h3>
+            </div>
+            <ul class="list-group rounded-0 border border-2 border-secondary d-flex flex-column">
+                {% for todoListItem in todoListItems reversed %}
+                {% if todoListItem.checked == False %}
+                <li class="list-group-item px-4">
+                    <div class="float-start d-flex py-1">
+                        <a href="/itemcheck/{{todoListItem.id}}"><img src="https://linode-django-bucket.eu-central-1.linodeobjects.com/icons/checkmark.png"></a>&nbsp;
+                        <h4>{{todoListItem.title}}</h4>
+                    </div>
+                    <div class="tasks-items-wrapper d-flex justify-content-end">&nbsp;&nbsp;&nbsp;
+                        <a type="button" class="btn btn-warning" href="/todo/todoedit/{{todoListItem.id}}">Edit</a>&nbsp;
+                        <a type="button" class="btn btn-danger" href="/deletetodoitem/{{todoListItem.id}}">Delete</a>
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if todoListItem_checked != 0 %}
+                <li class="list-group-item px-4 ">
+                    {% endif %}
+
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Done - {{todoListItem_checked}}
+                                </button>
+                            </h2>
+                            <br>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
+                                {% for todoListItem in todoListItems %}
+                                {% if todoListItem.checked == True %}
+                                <div class="d-flex py-1">
+                                    <a href="/itemuncheck/{{todoListItem.id}}"><img src="https://linode-django-bucket.eu-central-1.linodeobjects.com/icons/checkmark-checked.png"></a>&nbsp;
+                                    <h4 class="text-secondary"><del>{{todoListItem.title}}</del></h4>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+        <a type="button" class="btn btn-success" href="/todo">Back</a>
+        <a type="button" class="btn btn-danger" href="/deletetodo/{{todoList.id}}">Delete ToDo</a>
+    </div>
+        
+    {% if messages.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New ToDoList Item</h5>
+        </div>
+        <form action="" method="POST" id="formOne">
+            {% csrf_token %}
+            <div class="modal-body">
+                <input type="text" name="todoTitle" class="form-control" id="exampleFormControlInput1" placeholder="Name..." required>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock %}
